@@ -28,8 +28,9 @@ Route::delete('/cart/{id}', [\App\Http\Controllers\CartController::class , 'dest
 Route::post('order' , [\App\Http\Controllers\CartController::class , 'order'])->name('order');
 Route::get('/order/list' , [\App\Http\Controllers\CartController::class , 'orderList'])->name('order.list');
 Route::prefix('admin')->middleware('admin')->group(function (){
-    Route::resource('products', \App\Http\Controllers\ProductController::class);
-    Route::get('/orderlist' , [\App\Http\Controllers\AdminController::class , 'orderList'])->name('admin.orderList');
-    Route::put('/orders/cancel/{id}', [\App\Http\Controllers\AdminController::class, 'cancelOrder'])->name('orders.cancel');
-    Route::put('/orders/send/{id}', [\App\Http\Controllers\AdminController::class, 'sendOrder'])->name('orders.send');
+
+Route::resource('products', \App\Http\Controllers\ProductController::class);
+Route::get('/orderlist' , [\App\Http\Controllers\AdminController::class , 'orderList'])->name('admin.orderList');
+Route::put('/orders/cancel/{id}', [\App\Http\Controllers\AdminController::class, 'cancelOrder'])->name('orders.cancel');
+Route::put('/orders/send/{id}', [\App\Http\Controllers\AdminController::class, 'sendOrder'])->name('orders.send');
 });
