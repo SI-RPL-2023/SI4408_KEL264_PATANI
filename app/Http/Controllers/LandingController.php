@@ -10,9 +10,23 @@ use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
+    public function editProfile(){
+        return view('editProfile');
+    }
     public function articles(){
         $articles = Article::orderBy('created_at', 'desc')->get();
         return view('articles' , ['articles' => $articles]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->no_wa = $request->input('no_wa');
+        $user->update();
+
+        return redirect()->route('home')->with('success', 'Profile updated successfully.');
     }
 
     public function register(Request $request, Workshop $workshop)

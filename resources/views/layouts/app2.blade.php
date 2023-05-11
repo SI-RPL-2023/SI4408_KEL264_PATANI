@@ -110,6 +110,9 @@
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
+                                <a class="dropdown-item" href="{{ route('editProfile') }}">
+                                    Edit Profile
+                                </a>
                                 @if(\Illuminate\Support\Facades\Auth::user()->role =='admin')
                                     <a class="dropdown-item" href="{{ route('admin.index') }}">
                                       Dashboard Admin

@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/editProfile' , [\App\Http\Controllers\LandingController::class , 'editProfile'])->name('editProfile');
+Route::put('/edit-profile', [\App\Http\Controllers\LandingController::class, 'updateProfile'])->name('profile.update');
 
 
 Route::get('/store' , [\App\Http\Controllers\LandingController::class , 'store'])->name('store');
@@ -29,8 +31,9 @@ Route::post('order' , [\App\Http\Controllers\CartController::class , 'order'])->
 Route::get('/order/list' , [\App\Http\Controllers\CartController::class , 'orderList'])->name('order.list');
 Route::prefix('admin')->middleware('admin')->group(function (){
 
-Route::resource('products', \App\Http\Controllers\ProductController::class);
-Route::get('/orderlist' , [\App\Http\Controllers\AdminController::class , 'orderList'])->name('admin.orderList');
-Route::put('/orders/cancel/{id}', [\App\Http\Controllers\AdminController::class, 'cancelOrder'])->name('orders.cancel');
-Route::put('/orders/send/{id}', [\App\Http\Controllers\AdminController::class, 'sendOrder'])->name('orders.send');
+    Route::resource('categories', \App\Http\Controllers\CategoryController::class);
+    Route::resource('products', \App\Http\Controllers\ProductController::class);
+    Route::get('/orderlist' , [\App\Http\Controllers\AdminController::class , 'orderList'])->name('admin.orderList');
+    Route::put('/orders/cancel/{id}', [\App\Http\Controllers\AdminController::class, 'cancelOrder'])->name('orders.cancel');
+    Route::put('/orders/send/{id}', [\App\Http\Controllers\AdminController::class, 'sendOrder'])->name('orders.send');
 });
