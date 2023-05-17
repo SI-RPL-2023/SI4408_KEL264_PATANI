@@ -39,8 +39,9 @@ Route::prefix('admin')->middleware('admin')->group(function (){
     Route::put('/orders/cancel/{id}', [\App\Http\Controllers\AdminController::class, 'cancelOrder'])->name('orders.cancel');
     Route::put('/orders/send/{id}', [\App\Http\Controllers\AdminController::class, 'sendOrder'])->name('orders.send');
     
-})
+});
 Route::prefix('mitra')->group(function (){
     //articles
     Route::resource('mitraArticles' , \App\Http\Controllers\MitraArticlesController::class);
-});;
+    Route::resource('mitraWorkshops' , \App\Http\Controllers\MitraWorkshopsController::class);
+});
