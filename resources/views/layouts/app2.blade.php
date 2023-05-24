@@ -105,27 +105,31 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
                                 <a class="dropdown-item" href="{{ route('editProfile') }}">
                                     Edit Profile
                                 </a>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role =='user')
+                                    <a class="dropdown-item" onclick="konsultasi()">
+                                        Konsultasi
+                                    </a>
+                                @endif
+
                                 @if(\Illuminate\Support\Facades\Auth::user()->role =='admin')
                                     <a class="dropdown-item" href="{{ route('admin.index') }}">
                                       Dashboard Admin
                                     </a>
                                 @endif
 
-
                                 @if(\Illuminate\Support\Facades\Auth::user()->role =='mitra')
                                     <a class="dropdown-item" href="{{ route('mitraArticles.index') }}">
                                         Dashboard Mitra
                                     </a>
                                 @endif
-
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -147,6 +151,7 @@
 
 
 <!--   Core JS Files   -->
+<script src="source.js"></script>
 <script src="../landing/assets/js/core/popper.min.js" type="text/javascript"></script>
 <script src="../landing/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 <script src="../landing/assets/js/plugins/perfect-scrollbar.min.js"></script>
