@@ -114,6 +114,12 @@
                                     </a>
                                 @endif
 
+                                @if(\Illuminate\Support\Facades\Auth::user()->role =='user')
+                                    <a class="dropdown-item" onclick="pengajuan()">
+                                        Pengajuan Mitra
+                                    </a>
+                                @endif
+
                                 @if(\Illuminate\Support\Facades\Auth::user()->role =='admin')
                                     <a class="dropdown-item" href="{{ route('admin.index') }}">
                                       Dashboard Admin
