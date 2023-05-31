@@ -113,22 +113,27 @@
                                         Konsultasi
                                     </a>
                                 @endif
-
+                                
                                 @if(\Illuminate\Support\Facades\Auth::user()->role =='user')
-                                    <a class="dropdown-item" onclick="pengajuan()">
-                                        Pengajuan Mitra
-                                    </a>
+                                <a class="dropdown-item" onclick="pengajuan()">
+                                    Pengajuan Mitra
+                                </a>
                                 @endif
-
+                                
                                 @if(\Illuminate\Support\Facades\Auth::user()->role =='admin')
-                                    <a class="dropdown-item" href="{{ route('admin.index') }}">
-                                      Dashboard Admin
-                                    </a>
+                                <a class="dropdown-item" href="{{ route('admin.index') }}">
+                                    Dashboard Admin
+                                </a>
                                 @endif
-
+                                
                                 @if(\Illuminate\Support\Facades\Auth::user()->role =='mitra')
-                                    <a class="dropdown-item" href="{{ route('mitraArticles.index') }}">
+                                <a class="dropdown-item" href="{{ route('mitraArticles.index') }}">
                                         Dashboard Mitra
+                                    </a>
+                                    @endif
+                                @if(\Illuminate\Support\Facades\Auth::user()->role =='mitra')
+                                    <a class="dropdown-item" onclick="konsultasiMitra()">
+                                        Konsultasi
                                     </a>
                                 @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
