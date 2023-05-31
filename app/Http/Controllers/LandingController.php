@@ -6,7 +6,9 @@ use App\Models\Article;
 use App\Models\Product;
 use App\Models\Registration;
 use App\Models\Workshop;
+use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LandingController extends Controller
 {
@@ -71,6 +73,18 @@ class LandingController extends Controller
 
     public function store(Request $request){
         $products = Product::all();
-        return view('store' , compact('products'));
+        $reviews = Review::all();
+        $user = Auth::user();
+        $user_name = $user->name;
+        return view('store' , compact('products', 'reviews', 'user_name'));
+    }
+    public function storeSearch(Request $request){
+        $products = Product::orderBy('created_at', 'desc')
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->get();
+        $reviews = Review::orderBy('created_at', 'desc')
+            ->where('comment', 'like', '%' . $request->search . '%')
+            ->get();
+        return view('store' , ['products' => $products, 'reviews' => $reviews]);
     }
 }

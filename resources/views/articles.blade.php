@@ -27,7 +27,7 @@
                                 <label class="ms-0">Search Judul Artikel</label>
                                 <div class="input-group input-group-static">
                                     <span class="input-group-text"></span>
-                                    <input class="form-control " placeholder="Please select date" name="search" type="text">
+                                    <input class="form-control " placeholder="Please enter articles name" name="search" type="text">
                                 </div>
                             </div>
                             <div class="col-lg-3 mt-lg-n2 mt-2">

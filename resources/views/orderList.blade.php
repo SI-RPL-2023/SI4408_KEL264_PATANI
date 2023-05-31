@@ -27,6 +27,8 @@
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal{{ $order->id }}">
                                 View Items
                             </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"><a href="{{ route('review.index') }}" data-bs-target="{{ $order->id }}" style="color:white">Review</a>
+                            </button>
                         </td>
                     </tr>
 

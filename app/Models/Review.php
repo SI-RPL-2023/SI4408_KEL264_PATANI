@@ -5,28 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class Review extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'comment',
+        'status',
         'product_id',
-        'order_id',
-        'quantity',
+        'order_item_id',
+        'user_id',
     ];
 
-    public function order()
+    public function orderItem()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(OrderItem::class);
     }
 
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
-
-    public function review()
+    public function user()
     {
-        return $this->hasOne(Review::class, 'order_item_)id');
+        return $this->belongsTo(User::class);
     }
 }

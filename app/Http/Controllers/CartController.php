@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -88,5 +89,28 @@ class CartController extends Controller
     public function orderList(){
         $orders  = Order::where('user_id' , Auth::id())->get();
         return view('orderList' , compact('orders'));
+    }
+    public function reviewIndex(){
+        $orders  = Order::where('user_id' , Auth::id())->get();
+        return view('addReviews' , compact('orders'));
+    }
+
+    public function addReview(Request $request){
+        $orders  = Order::where('user_id' , Auth::id())->get();
+        foreach ($orders as $order){
+            $orderitem  = OrderItem::where('order_id' , $order->id)->get();
+        }
+        foreach ($orderitem as $item){
+            $user = Auth::user();
+            $user_id = $user->id;
+            $rev = new Review();
+            $rev->comment = $request->review;
+            $rev->user_id = $user_id;
+            $rev->order_item_id = $item->id;
+            $rev->product_id = $item->product_id;
+            $rev->status = 1;
+            $rev->save();
+            return redirect()->route('order.list')->with('success', 'review telah ditambah!');
+        }
     }
 }
