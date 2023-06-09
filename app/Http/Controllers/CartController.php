@@ -68,7 +68,6 @@ class CartController extends Controller
         $order->user_id = Auth::id();
         $order->status = 'sudah di bayar';
         $order->total = $total;
-
         $order->save();
 
         foreach ($cart as $x){
@@ -77,40 +76,35 @@ class CartController extends Controller
             $orderItem->product_id = $x->product_id;
             $orderItem->quantity = $x->quantity;
             $orderItem->save();
-
             $x->delete();
         }
-
+        $orderItem = OrderItem::all();
+        foreach ($cart as $y){
+            foreach ($orderItem as $item){
+                $review = new Review();
+                $review->user_id = $y->user_id;
+                $review->order_item_id = $item->id;
+                $review->product_id = $y->product_id;
+                $review->order_id = $order->id;
+                $review->comment = '';
+                $review->status = 'not';
+                $review->save();
+            }
+        }
         return redirect()->back();
-
-
     }
 
     public function orderList(){
         $orders  = Order::where('user_id' , Auth::id())->get();
         return view('orderList' , compact('orders'));
     }
-    public function reviewIndex(){
-        $orders  = Order::where('user_id' , Auth::id())->get();
-        return view('addReviews' , compact('orders'));
-    }
 
-    public function addReview(Request $request){
-        $orders  = Order::where('user_id' , Auth::id())->get();
-        foreach ($orders as $order){
-            $orderitem  = OrderItem::where('order_id' , $order->id)->get();
-        }
-        foreach ($orderitem as $item){
-            $user = Auth::user();
-            $user_id = $user->id;
-            $rev = new Review();
-            $rev->comment = $request->review;
-            $rev->user_id = $user_id;
-            $rev->order_item_id = $item->id;
-            $rev->product_id = $item->product_id;
-            $rev->status = 1;
-            $rev->save();
-            return redirect()->route('order.list')->with('success', 'review telah ditambah!');
-        }
+    public function addReview(Request $request, $id){
+        $reviews = Review::findOrFail($id);
+        $reviews->status = 'yes';
+        $reviews->comment = $request->review;
+        $reviews->save();
+
+        return redirect()->route('order.list')->with('success', 'review telah ditambah!');
     }
 }

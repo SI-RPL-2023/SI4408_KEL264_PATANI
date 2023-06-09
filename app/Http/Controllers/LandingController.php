@@ -73,7 +73,7 @@ class LandingController extends Controller
 
     public function store(Request $request){
         $products = Product::all();
-        $reviews = Review::all();
+        $reviews  = Review::where('user_id' , Auth::id())->get();
         $user = Auth::user();
         $user_name = $user->name;
         return view('store' , compact('products', 'reviews', 'user_name'));
@@ -82,9 +82,6 @@ class LandingController extends Controller
         $products = Product::orderBy('created_at', 'desc')
             ->where('name', 'like', '%' . $request->search . '%')
             ->get();
-        $reviews = Review::orderBy('created_at', 'desc')
-            ->where('comment', 'like', '%' . $request->search . '%')
-            ->get();
-        return view('store' , ['products' => $products, 'reviews' => $reviews]);
+        return view('store' , ['products' => $products]);
     }
 }

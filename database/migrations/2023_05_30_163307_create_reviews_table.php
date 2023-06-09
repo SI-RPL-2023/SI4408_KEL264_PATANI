@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->text('comment');
-            $table->boolean('status')->default(0);
+            $table->text('status');
             $table->unsignedBigInteger('user_id');
             $table->bigInteger('order_item_id')->unsigned();
+            $table->bigInteger('order_id')->unsigned();
             $table->unsignedBigInteger('product_id');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('order_item_id')->references('id')->on('order_items')->delete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->delete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }

@@ -104,12 +104,14 @@
                         <div class="p-3">
                             {{$product->description }}
                         </div>
-                        @foreach ($reviews as $review)
                         <h6>Ulasan</h6>
                         <div class="p-3">
-                            {{ $user_name }}: "{{$review->comment}}"
+                            @foreach($reviews as $review)
+                                @if($review->product_id === $product->id)
+                                    {{ $user_name }}: "{{$review->comment}}"
+                                @endif
+                            @endforeach
                         </div>
-                        @endforeach
 
                         <button class="btn btn-lg btn-info">Harga : Rp {{$product->price}}</button>
                         <form action="{{ route('cart.add') }}" method="POST">

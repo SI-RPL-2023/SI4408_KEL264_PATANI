@@ -14,6 +14,7 @@ class Review extends Model
         'status',
         'product_id',
         'order_item_id',
+        'order_id',
         'user_id',
     ];
 
@@ -29,5 +30,9 @@ class Review extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

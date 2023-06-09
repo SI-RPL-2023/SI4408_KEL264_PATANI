@@ -18,7 +18,7 @@
                 <tbody>
                 @foreach($orders as $order)
                     <tr>
-                        <td>{{ $order->id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td>{{ $order->bukti_trf }}</td>
                         <td>{{ $order->status }}</td>
@@ -27,17 +27,44 @@
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderModal{{ $order->id }}">
                                 View Items
                             </button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"><a href="{{ route('review.index') }}" data-bs-target="{{ $order->id }}" style="color:white">Review</a>
-                            </button>
+                            @foreach($order->reviews as $review)
+                                @if($review->status == 'yes')
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"><a href="{{ route('order.list') }}" style="color:white">Review</a>
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $review->id }}">Review
+                                    </button>
+                                @endif
                         </td>
                     </tr>
-
-                @endforeach
+                    {{-- modal edit review --}}
+                    <div class="modal fade" id="editModal{{ $review->id }}" tabindex="-1" aria-labelledby="editModal{{ $review->id }}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModal{{ $review->id }}Label">Add Review</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" style="color:black;" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('order.addReview', $review->id) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Review</label>
+                                            <input type="text" class="form-control" id="review" name="review" value="{{ $review->comment }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add Review</button>
+                                    </form>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </tbody>
+                @endforeach
             </table>
 
             @foreach($orders as $order)
-
             <div class="modal fade" id="orderModal{{ $order->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">

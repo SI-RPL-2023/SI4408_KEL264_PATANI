@@ -25,8 +25,8 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function review()
+    public function reviews()
     {
-        return $this->hasOne(Review::class, 'order_item_)id');
+        return $this->hasOne(Review::class, 'order_item_id');
     }
 }
