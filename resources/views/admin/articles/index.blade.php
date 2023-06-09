@@ -59,8 +59,8 @@
                 @foreach ($articles as $article)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $article->title }}</td>
-                        <td style="max-height: 2.5em;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">{{ $article->content }}</td>
+                        <td>{{ Str::limit($article->title, 30) }}</td>
+                        <td>{{ Str::limit($article->content, 30) }}</td>
                         <td><img src="{{ asset('images/' . $article->image) }}" alt="{{ $article->title }}" height="50"></td>
 
                         <td>{{$article->user->name}}</td>
@@ -80,7 +80,7 @@
 
 
 
-                         @endforeach
+                @endforeach
 
                 @foreach($articles as $article)
                     <!-- Modal Edit Artikel-->

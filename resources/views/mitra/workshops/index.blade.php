@@ -57,11 +57,9 @@
                 <tr>
                     <th>No.</th>
                     <th>Title</th>
-                    <th>Description</th>
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Capacity</th>
-                    <th>Image</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -69,12 +67,10 @@
                 @foreach($workshops as $workshop)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $workshop->title }}</td>
-                        <td>{{ $workshop->description }}</td>
+                        <td>{{ Str::limit($workshop->title, 10) }}</td>
                         <td>{{ $workshop->start_time }}</td>
                         <td>{{ $workshop->end_time }}</td>
                         <td>{{ $workshop->capacity }}</td>
-                        <td><img src="{{ asset('workshop_images/'.$workshop->image) }}" alt="{{ $workshop->title }}" height="100"></td>
                         <td>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#participant-modal-{{ $workshop->id }}">
                                 Lihat Peserta
@@ -150,4 +146,78 @@
                                     Are you sure you want to delete this workshop?
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="{{ route('workshops.
+                                    <form action="{{ route('workshops.destroy', $workshop->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                @endforeach
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+
+    @foreach($workshops as $workshop)
+        <!-- Modal -->
+        <div class="modal fade" id="participant-modal-{{ $workshop->id }}" tabindex="-1" aria-labelledby="participant-modal-{{ $workshop->id }}-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="participant-modal-{{ $workshop->id }}-label">Peserta Workshop "{{ $workshop->title }}"</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">No. WA</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($workshop->registrations as $registration)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $registration->user->name }}</td>
+                                    <td>{{ $registration->user->no_wa }}</td>
+                                    <td>
+                                        <form action="{{ route('registrations.destroy', ['id' => $registration->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @endforeach
+@endsection
+
+
+@push('script')
+    <script>
+        let table = new DataTable('#workshops-table', {
+            // options
+        });
+
+    </script>
+@endpush

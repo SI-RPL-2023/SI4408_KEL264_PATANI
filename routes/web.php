@@ -18,7 +18,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/editProfile' , [\App\Http\Controllers\LandingController::class , 'editProfile'])->name('editProfile');
 Route::put('/edit-profile', [\App\Http\Controllers\LandingController::class, 'updateProfile'])->name('profile.update');
 
@@ -28,7 +27,6 @@ Route::post('/articlesSearch'  , [\App\Http\Controllers\LandingController::class
 Route::get('/workshops' , [\App\Http\Controllers\LandingController::class , 'workshops'])->name('workshops.landing');
 Route::post('/workshopsSearch' , [\App\Http\Controllers\LandingController::class , 'workshopsSearch'])->name('workshops.search');
 Route::post('/workshops/{workshop}/register', [\App\Http\Controllers\LandingController::class, 'register'])->name('workshops.register');
-
 
 Route::get('/store' , [\App\Http\Controllers\LandingController::class , 'store'])->name('store');
 Route::post('/storeSearch' , [\App\Http\Controllers\LandingController::class , 'storeSearch'])->name('store.search');

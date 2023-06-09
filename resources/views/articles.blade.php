@@ -56,12 +56,14 @@
                                             </h5>
                                         </a>
                                         <p style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
-                                            {!! $article->content !!}
+                                            {{ Str::limit($article->content, 100) }} 
                                             <!-- Tombol untuk melihat detail artikel -->
                                             <!-- Tombol untuk modal -->
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detailModal{{$article->id}}">
-                                                Lihat Detail
-                                            </button>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-success" style="width: 60%;" data-bs-toggle="modal" data-bs-target="#detailModal{{$article->id}}">
+                                            Lihat Detail
+                                        </button>
                                     </div>
                                 </div>
                             </div>

@@ -55,13 +55,16 @@
                                                     {{$workshop->title}}
                                                 </h5>
                                             </a>
-                                            <p style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
-                                                {!! $workshop->description !!}
+                                            <p>
+                                                {{ Str::limit($workshop->description, 60) }}
                                                 <!-- Tombol untuk melihat detail artikel -->
                                                 <!-- Tombol untuk modal -->
-                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detailModal{{$workshop->id}}">
-                                                    Lihat Detail
-                                                </button>
+                                            </p>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-success" style="width: 60%;" data-bs-toggle="modal" data-bs-target="#detailModal{{$workshop->id}}">
+                                                Lihat Detail
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -57,24 +57,20 @@
                 <tr>
                     <th>No.</th>
                     <th>Title</th>
-                    <th>Description</th>
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Capacity</th>
-                    <th>Image</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($workshops as $workshop)
                     <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{ $workshop->title }}</td>
-                        <td>{{ $workshop->description }}</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ Str::limit($workshop->title, 10) }}</td>
                         <td>{{ $workshop->start_time }}</td>
                         <td>{{ $workshop->end_time }}</td>
                         <td>{{ $workshop->capacity }}</td>
-                        <td><img src="{{ asset('workshop_images/'.$workshop->image) }}" alt="{{ $workshop->title }}" height="100"></td>
                         <td>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#participant-modal-{{ $workshop->id }}">
                                 Lihat Peserta
